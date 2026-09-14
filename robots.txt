@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /_project/
+
+Sitemap: https://songokura.github.io/asylzhaluzikz/sitemap.xml
