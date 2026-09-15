@@ -9,4 +9,4 @@ User-agent: AdsBot-Google-Mobile
 Disallow: /assets/lang/
 Disallow: /*lang=kk
 
-Sitemap: https://songokura.github.io/asylzhaluzikz/sitemap.xml
+Sitemap: https://asyl-zhaluzi.kz/sitemap.xml
