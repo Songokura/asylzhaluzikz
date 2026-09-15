@@ -14,8 +14,10 @@
   --ink:#2B2A29; --ink2:#454240; --mut:#7A736A; --mut2:#A39B90;
   --gold:#A78A6A; --gold2:#C9AE8A; --goldl:#FAF1D7; --wa:#25D366;
   --line:rgba(43,42,41,.1);
-  --fd:"Cormorant Garamond","Times New Roman",serif;
-  --ft:"Montserrat","Segoe UI",Arial,sans-serif;
+  --fd:"Noto Serif Display",Georgia,"Times New Roman",serif;
+  /* мелкие заголовки и цены - текстовое начертание той же гарнитуры: у Display тонкие штрихи (дефис, «/») на 18-22px пропадают */
+  --fs:"Noto Serif",Georgia,"Times New Roman",serif;
+  --ft:"Onest","Segoe UI",Arial,sans-serif;
   --hh:70px;
   --enter:0; --exit:0; --stay:0; --open:0; --cov:1; --sp:0;
   --stripes:repeating-linear-gradient(100deg,transparent 0 58px,rgba(167,138,106,.045) 74px,rgba(167,138,106,.09) 96px,rgba(167,138,106,.045) 118px,transparent 134px,transparent 170px);
@@ -28,18 +30,19 @@ body{margin:0;background:var(--paper);color:var(--ink);font:400 15px/1.5 var(--f
 img,video,svg{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit}
-h1,h2,h3,p,ul,figure{margin:0}
+h1,h2,h3,h4,p,ul,figure{margin:0}
 ul{padding:0;list-style:none}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .wrap{width:min(1200px,100% - 32px);margin-inline:auto}
 @media(min-width:761px){.wrap{width:min(1200px,100% - 64px)}}
 [hidden]{display:none!important}
+.nw{white-space:nowrap}
 
 /* ---------- типографика: центр на всём сайте ---------- */
 .kick{display:flex;align-items:center;justify-content:center;gap:10px;font:600 11px/1.2 var(--ft);letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
 .kick::before,.kick::after{content:"";width:22px;height:9px;flex:0 0 auto;background:repeating-linear-gradient(180deg,var(--gold2) 0 2px,transparent 2px 4.5px)}
-.h2{font:600 clamp(34px,5.6vw,66px)/1.02 var(--fd);letter-spacing:-.01em;margin-top:14px;color:var(--ink);text-align:center}
-.h2 em{font-style:italic;font-weight:500;color:var(--gold)}
+.h2{font:400 clamp(30px,4.6vw,56px)/1.06 var(--fd);letter-spacing:-.02em;margin-top:14px;color:var(--ink);text-align:center}
+.h2 em{font-style:italic;font-weight:300;color:var(--gold)}
 .lead{margin-top:14px;font-size:15px;line-height:1.55;color:var(--mut);text-align:center}
 @media(min-width:761px){.lead{font-size:17px;margin-top:18px}}
 .sh{margin-bottom:34px;text-align:center}
@@ -87,7 +90,7 @@ body.menu-open .burger span:nth-child(3){transform:translateY(-7px) rotate(-45de
 .mnav{position:fixed;inset:0;z-index:60;background:var(--paper);color:var(--ink);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;padding:calc(var(--hh) + 16px) 28px 40px;overflow-y:auto;visibility:hidden;transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.7,.2,1),visibility 0s .4s}
 .mnav::before{content:"";position:absolute;inset:0;background:var(--stripes);pointer-events:none}
 body.menu-open .mnav{visibility:visible;transform:none;transition:transform .4s cubic-bezier(.2,.7,.2,1),visibility 0s}
-.mnav a{font:600 clamp(26px,6.6vw,38px)/1.15 var(--fd);padding:4px 0;position:relative;transition:color .25s}
+.mnav a{font:400 clamp(24px,6vw,34px)/1.2 var(--fd);padding:4px 0;position:relative;transition:color .25s}
 .mnav a:hover{color:var(--gold)}
 .mnav-foot{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 12px;margin-top:26px;position:relative}
 .mnav-foot a{display:inline-flex;align-items:center;gap:8px;font:600 14px/1 var(--ft);color:var(--ink);padding:12px 18px;border:1px solid rgba(43,42,41,.3);border-radius:999px}
@@ -139,9 +142,9 @@ html.no-plate .pw{--open:1;--enter:1}
 .hero.on .hero-txt > *{opacity:1;transform:none}
 .hero-txt > :nth-child(2){transition-delay:.1s}.hero-txt > :nth-child(3){transition-delay:.2s}.hero-txt > :nth-child(4){transition-delay:.3s}.hero-txt > :nth-child(5){transition-delay:.4s}
 .hero-txt .kick{color:var(--gold)}
-.h1{font:600 clamp(40px,min(7vw,9.4svh),92px)/1 var(--fd);letter-spacing:-.01em;margin-top:16px;color:var(--ink)}
+.h1{font:400 clamp(36px,min(6vw,8.4svh),80px)/1.04 var(--fd);letter-spacing:-.025em;margin-top:16px;color:var(--ink)}
 .h1 span{display:block;white-space:nowrap}
-.h1 .sub{font-size:.62em;font-style:italic;font-weight:500;color:var(--gold);margin-top:.1em;letter-spacing:0}
+.h1 .sub{font-size:.58em;font-style:italic;font-weight:300;color:var(--gold);margin-top:.16em;letter-spacing:-.01em}
 .hero .lead{max-width:none;color:var(--ink2)}
 .hero .lead b{font-weight:600;color:var(--ink)}
 .hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
@@ -156,9 +159,9 @@ html.no-plate .pw{--open:1;--enter:1}
 @media(max-width:760px){
   .hero-bg img{object-position:50% 100%}
   .hero-txt{bottom:calc((1 - var(--cov)) * 100% + 38px)}
-  .h1{font-size:clamp(34px,10.4vw,46px);margin-top:12px}
-  .h1 span{white-space:normal}
-  .h1 .sub{font-size:.7em}
+  .h1{font-size:clamp(30px,9vw,40px);margin-top:12px}
+  .h1 span{white-space:normal;text-wrap:balance}
+  .h1 .sub{font-size:.64em}
   .hero .lead{font-size:14px;margin-top:12px}
   .hero-cta{margin-top:18px;gap:10px}
   .hero-cta .btn{flex:1 1 100%;height:50px;min-width:0}
@@ -181,11 +184,11 @@ html.no-plate .pw{--open:1;--enter:1}
 .pw.on .txt > *{opacity:1;transform:none}
 .plate .txt > :nth-child(2){transition-delay:.08s}.plate .txt > :nth-child(3){transition-delay:.16s}.plate .txt > :nth-child(4){transition-delay:.24s}
 html.no-plate .plate .txt > *,html.no-plate .hero-txt > *{opacity:1;transform:none;transition:none}
-.pp .h2{font-size:clamp(30px,min(4.6vw,6.4svh),58px);margin-top:10px}
+.pp .h2{font-size:clamp(28px,min(4vw,5.8svh),50px);margin-top:10px}
 .pp .lead{font-size:15px;margin-top:10px}
 .pp .cta{margin-top:18px;display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap}
-.pchip{display:inline-flex;align-items:center;height:54px;padding:0 20px;border-radius:999px;border:1px solid rgba(167,138,106,.5);background:rgba(255,255,255,.5);font:600 15px/1 var(--fd);font-size:20px;color:var(--ink)}
-.pchip span{font-family:var(--fd);font-weight:600;font-size:20px;letter-spacing:.01em}
+.pchip{display:inline-flex;align-items:center;height:54px;padding:0 20px;border-radius:999px;border:1px solid rgba(167,138,106,.5);background:rgba(255,255,255,.5);font:500 15px/1 var(--fs);font-size:18px;color:var(--ink)}
+.pchip span{font-family:var(--fs);font-weight:500;font-size:18px;letter-spacing:0}
 /* окно: скруглённая рама, внутри фото и штора */
 .win{position:relative;width:min(1100px,100%);flex:1 1 auto;min-height:0;margin-top:22px;border-radius:22px;overflow:hidden;background:var(--sand2);box-shadow:0 40px 80px -40px rgba(43,42,41,.45),inset 0 0 0 1px rgba(43,42,41,.06);transform:translateY(calc(24px * (1 - var(--enter))))}
 .win img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(calc(1 + .06 * var(--exit)))}
@@ -196,12 +199,12 @@ html.no-plate .plate .txt > *,html.no-plate .hero-txt > *{opacity:1;transform:no
 .win .chain{right:24px;height:min(46%,260px);background-position:0 calc(var(--open) * 220px)}
 @media(max-width:760px){
   .pp-in{padding-top:calc(var(--hh) + 6px);padding-bottom:calc(20px + 60px)}
-  .pp .h2{font-size:clamp(28px,7.6vw,38px);margin-top:8px}
+  .pp .h2{font-size:clamp(25px,6.8vw,34px);margin-top:8px}
   .pp .lead{font-size:14px;margin-top:8px}
   .pp .cta{margin-top:14px;gap:8px}
   .pp .cta .btn{height:46px;padding:0 20px}
   .pchip{height:46px;padding:0 14px}
-  .pchip span{font-size:17px}
+  .pchip span{font-size:16px}
   .win{margin-top:14px;border-radius:16px}
   .win .chain{right:14px}
 }
@@ -220,21 +223,36 @@ html.no-plate .plate .txt > *,html.no-plate .hero-txt > *{opacity:1;transform:no
 html.no-plate .rv{opacity:1;transform:none;transition:none}
 .note-p{margin-top:22px;text-align:center;font-size:12.5px;color:var(--mut2)}
 
-/* каталог: карточка модели с ценой */
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+/* каталог: три группы, ряды по три и по две карточки (сетка на 6 колонок) */
+.cat-g + .cat-g{margin-top:52px}
+.cat-h{display:flex;align-items:center;justify-content:center;gap:18px;margin-bottom:22px;font:400 clamp(24px,2.6vw,32px)/1.1 var(--fd);letter-spacing:-.01em;color:var(--ink);text-align:center}
+.cat-h::before,.cat-h::after{content:"";flex:1 1 0;max-width:260px;height:1px;background:linear-gradient(90deg,transparent,rgba(167,138,106,.6))}
+.cat-h::after{background:linear-gradient(90deg,rgba(167,138,106,.6),transparent)}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}
+.grid .card{grid-column:span 2}
+.grid .card.w{grid-column:span 3}
+.card.w .im{aspect-ratio:2/1}
+/* заглушка фото: дверной проём с сеткой-гармошкой, собранной наполовину (в стиле сайта, без картинки) */
+.ph-net{background:linear-gradient(180deg,#EFE7DA,#E6DCCB)}
+.ph-net::before{content:"";position:absolute;left:22%;right:22%;top:12%;bottom:0;border:10px solid #FFFDF9;border-bottom:0;border-radius:4px 4px 0 0;box-shadow:0 20px 40px -24px rgba(43,42,41,.45);background:linear-gradient(90deg,transparent 0 46%,rgba(255,253,249,.4) 46%),linear-gradient(180deg,#dfe6e4,#f3efe6)}
+.ph-net::after{content:"";position:absolute;left:calc(22% + 10px);width:24%;top:calc(12% + 10px);bottom:0;background:repeating-linear-gradient(90deg,rgba(69,66,64,.55) 0 1px,rgba(69,66,64,.08) 1px 5px,rgba(255,253,249,.5) 5px 6px,rgba(69,66,64,.12) 6px 10px),repeating-linear-gradient(0deg,rgba(69,66,64,.12) 0 1px,transparent 1px 3px);border-right:4px solid var(--gold)}
+.ph-cap{position:absolute;left:0;right:0;top:4.5%;z-index:2;text-align:center;font:600 10px/1 var(--ft);letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
+.ph-net.has-img::before,.ph-net.has-img::after,.ph-net.has-img .ph-cap{display:none}
 .card{position:relative;border-radius:18px;overflow:hidden;background:var(--paper2);box-shadow:0 1px 0 var(--line),0 24px 50px -36px rgba(43,42,41,.5);display:flex;flex-direction:column;transition:transform .35s,box-shadow .35s}
 .card:hover{transform:translateY(-4px);box-shadow:0 1px 0 var(--line),0 30px 50px -30px rgba(43,42,41,.55)}
 .card .im{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:var(--sand)}
 .card .im img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.2,1)}
 .card:hover .im img{transform:scale(1.05)}
 .card .cb{padding:16px 16px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
-.card h3{font:600 22px/1.1 var(--fd);color:var(--ink)}
-.card p{font-size:13px;color:var(--mut);line-height:1.4}
+.card h4{font:500 20px/1.2 var(--fs);letter-spacing:-.01em;color:var(--ink)}
+.card p{font-size:13.5px;color:var(--mut);line-height:1.45}
 .card .row{margin-top:auto;padding-top:12px;display:flex;flex-direction:column;align-items:flex-start;gap:10px}
-.price{font:600 21px/1 var(--fd);color:var(--ink);white-space:nowrap}
+.price{font:500 19px/1 var(--fs);color:var(--ink);white-space:nowrap}
 .price,.pchip,.calc-r .sum,.facts b,.step .n,.krow a.big{font-variant-numeric:lining-nums}
-@media(max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:760px){.grid{gap:10px}.card{border-radius:14px}.card .cb{padding:12px 12px 14px}.card h3{font-size:19px}.card p{font-size:12px}.price{font-size:18px}.card .btn.sm{height:38px;padding:0 12px;font-size:12px}.card .row{padding-top:8px}}
+@media(max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.grid .card,.grid .card.w{grid-column:auto}.card.w .im{aspect-ratio:4/3}.grid .card:last-child:nth-child(odd){grid-column:1 / -1}.grid .card:last-child:nth-child(odd) .im{aspect-ratio:16/9}}
+@media(max-width:760px){.grid{gap:10px}.cat-g + .cat-g{margin-top:38px}.cat-h{margin-bottom:16px;gap:12px}.card{border-radius:14px}.card .cb{padding:12px 12px 14px}.card h4{font-size:17px}.card p{font-size:12.5px;line-height:1.4}.price{font-size:17px}.card .btn.sm{height:38px;padding:0 12px;font-size:12px}.card .row{padding-top:8px}}
+/* телефон: карточка строкой - фото слева, описание справа, так текст читается */
+@media(max-width:560px){.grid{grid-template-columns:minmax(0,1fr)}.grid .card:last-child:nth-child(odd){grid-column:auto}.card{flex-direction:row}.card .im,.card.w .im,.grid .card:last-child:nth-child(odd) .im{flex:0 0 38%;aspect-ratio:auto;min-height:100%}.card .cb{padding:12px 12px 12px 14px}}
 @media(max-width:400px){.card .row{align-items:stretch}.card .btn.sm{width:100%}}
 
 /* для кого: четыре высоких карточки-окна */
@@ -244,7 +262,7 @@ html.no-plate .rv{opacity:1;transform:none;transition:none}
 .wcard:hover img{transform:scale(1.05)}
 .wcard::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(43,42,41,.72))}
 .wcard .wt{position:absolute;left:16px;right:16px;bottom:16px;z-index:2;color:#fff;text-align:center}
-.wcard .wt b{display:block;font:600 26px/1.1 var(--fd)}
+.wcard .wt b{display:block;font:400 26px/1.1 var(--fd)}
 .wcard .wt small{display:block;font:500 12px/1.35 var(--ft);color:rgba(255,255,255,.82);margin-top:4px}
 @media(max-width:760px){.who{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.wcard{border-radius:14px}.wcard .wt{left:10px;right:10px;bottom:12px}.wcard .wt b{font-size:21px}.wcard .wt small{font-size:11px}}
 
@@ -255,7 +273,7 @@ html.no-plate .rv{opacity:1;transform:none;transition:none}
 .facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .facts li{padding:22px 20px;border-radius:16px;background:var(--paper2);box-shadow:0 1px 0 var(--line);display:grid;gap:6px;text-align:center}
 .facts li:last-child{grid-column:1 / -1}
-.facts b{font:600 clamp(34px,4vw,48px)/1 var(--fd);color:var(--gold);letter-spacing:-.01em}
+.facts b{font:400 clamp(32px,3.6vw,44px)/1 var(--fd);color:var(--gold);letter-spacing:-.02em}
 .facts span{font-size:13px;color:var(--mut)}
 @media(max-width:900px){.why{grid-template-columns:1fr;gap:22px}.why-ph{aspect-ratio:16/10}.facts{gap:10px}.facts li{padding:16px 12px}}
 
@@ -277,8 +295,8 @@ html.no-plate .rv{opacity:1;transform:none;transition:none}
 /* шаги */
 .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
 .step{position:relative;padding:22px 20px 24px;border-radius:16px;background:var(--paper2);box-shadow:0 1px 0 var(--line);display:flex;gap:16px;align-items:flex-start}
-.step .n{font:600 46px/1 var(--fd);color:transparent;-webkit-text-stroke:1.2px var(--gold);flex:0 0 auto}
-.step h3{font:600 21px/1.15 var(--fd)}
+.step .n{font:400 44px/1 var(--fd);color:transparent;-webkit-text-stroke:1px var(--gold);flex:0 0 auto}
+.step h3{font:500 18px/1.25 var(--fs)}
 .step p{font-size:13.5px;color:var(--mut);margin-top:6px;line-height:1.45}
 @media(max-width:1000px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.steps{grid-template-columns:1fr;gap:10px}.step{padding:16px}.step .n{font-size:38px}}
@@ -293,7 +311,7 @@ html.no-plate .rv{opacity:1;transform:none;transition:none}
 .calc input:focus,.calc select:focus,.form input:focus,.form textarea:focus{outline:none;border-color:var(--gold)}
 .calc-r{display:grid;align-content:center;justify-items:center;gap:8px;padding:28px 24px;border-radius:20px;background:var(--ink);color:var(--paper2);text-align:center}
 .calc-r .kt{font:600 11px/1.2 var(--ft);letter-spacing:.18em;text-transform:uppercase;color:var(--gold2)}
-.calc-r .sum{font:600 clamp(40px,4.6vw,56px)/1 var(--fd);color:var(--goldl)}
+.calc-r .sum{font:400 clamp(36px,4.2vw,52px)/1 var(--fd);color:var(--goldl);letter-spacing:-.02em}
 .calc-r small{font-size:13px;color:rgba(255,253,249,.7)}
 .calc-r .btn{margin-top:14px;background:var(--paper2);color:var(--ink)}
 .calc-r .btn:hover{background:#fff}
@@ -303,9 +321,9 @@ html.no-plate .rv{opacity:1;transform:none;transition:none}
 /* вопросы */
 .faq{display:grid;gap:10px;max-width:860px;margin-inline:auto}
 .faq details{border-radius:14px;background:var(--paper2);box-shadow:0 1px 0 var(--line);padding:0 20px}
-.faq summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 0;font:600 20px/1.2 var(--fd);color:var(--ink)}
+.faq summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 0;font:500 17px/1.3 var(--fs);color:var(--ink)}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font:500 26px/1 var(--fd);color:var(--gold);flex:0 0 auto;transition:transform .3s}
+.faq summary::after{content:"+";font:300 26px/1 var(--fd);color:var(--gold);flex:0 0 auto;transition:transform .3s}
 .faq details[open] summary::after{transform:rotate(45deg)}
 .faq p{padding:0 0 18px;font-size:14px;color:var(--mut);line-height:1.5}
 
@@ -326,7 +344,7 @@ html.no-plate .rv{opacity:1;transform:none;transition:none}
 .kph img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
 .krow{display:grid;gap:6px;text-align:center}
 .kt{font:600 11px/1.2 var(--ft);letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
-.krow a.big{font:600 clamp(28px,3.4vw,40px)/1.1 var(--fd);color:var(--ink);transition:color .25s}
+.krow a.big{font:400 clamp(26px,3vw,36px)/1.1 var(--fd);color:var(--ink);transition:color .25s}
 .krow a.big:hover{color:var(--gold)}
 .krow .kv{font-size:15px;color:var(--ink2)}
 .soc{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
@@ -340,7 +358,7 @@ html.no-plate .rv{opacity:1;transform:none;transition:none}
 .ftr .brand{display:flex;align-items:center;gap:10px}
 .ftr .brand .mark{width:36px;height:36px}
 .ftr .brand .word{font-size:11.5px}
-.ftr .slog{font:italic 500 18px/1 var(--fd);color:var(--gold)}
+.ftr .slog{font:italic 400 17px/1 var(--fs);color:var(--gold)}
 @media(max-width:760px){.ftr .wrap{justify-content:center;text-align:center}}
 
 /* шнур-индикатор прокрутки: бусина едет по шнуру */

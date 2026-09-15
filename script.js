@@ -2,7 +2,8 @@
    ASYL.ZHALUZI.KZ - скрипт страницы.
    Плиты и рулонная штора (герой: интро поднимает полотно с текстом,
    дальше штора сматывается по скроллу; плиты: кадр открывается по --open) ·
-   шнур-индикатор прокрутки · перевод RU/KZ (?lang= сильнее localStorage) ·
+   шнур-индикатор прокрутки · перевод RU/KZ (словарь kk - assets/lang/kk.js по клику,
+   ?lang= сильнее localStorage) ·
    меню · бегущая лента · лента работ с кнопками · калькулятор ·
    WhatsApp с названием модели · форма в WhatsApp. Библиотек нет.
    ============================================================ */
@@ -18,17 +19,19 @@ var CONTACT = {
   wa: "77000000000",              /* wa.me/ */
   ig: "asyl.zhaluzi.kz"
 };
-/* 🟠 Цены «от» за м² - ориентир по рынку Алматы до подтверждения клиентом
-   (см. _project/company-info.md). Из этого же объекта читает калькулятор. */
+/* Цены «от» за м² - от клиента 15.09.2026. Из этого же объекта читает калькулятор.
+   Казахские названия моделей - в assets/lang/kk.js (names). */
 var PRICES = {
-  "rulonnye":      { ru:"Рулонные шторы",         kk:"Рулондық перделер",     p: 6000 },
-  "den-noch":      { ru:"День-ночь (зебра)",      kk:"Күн-түн (зебра)",       p:11000 },
-  "blackout":      { ru:"Блэкаут",                kk:"Блэкаут",               p:12000 },
-  "kassetnye":     { ru:"Кассетные UNI",          kk:"Кассеталық UNI",        p:14000 },
-  "vertikalnye":   { ru:"Вертикальные жалюзи",    kk:"Тік жалюзи",            p: 6500 },
-  "gorizontalnye": { ru:"Горизонтальные жалюзи",  kk:"Көлденең жалюзи",       p:10000 },
-  "plisse":        { ru:"Плиссе",                 kk:"Плиссе",                p:12000 },
-  "fotopechat":    { ru:"Фотопечать",             kk:"Фотобасып шығару",      p: 9000 }
+  "mini":            { ru:"Рулонные роллшторы в системе Mini", p: 4500 },
+  "klassicheskie":   { ru:"Классические роллшторы",            p: 6000 },
+  "den-noch":        { ru:"Роллшторы День-Ночь",               p: 9000 },
+  "blackout":        { ru:"Роллшторы Блэкаут",                 p: 9000 },
+  "kassetnye":       { ru:"Кассетные роллшторы",               p:16500 },
+  "vertikalnye":     { ru:"Вертикальные жалюзи",               p: 4500 },
+  "gorizontalnye":   { ru:"Горизонтальные жалюзи",             p: 8500 },
+  "plisse":          { ru:"Жалюзи Плиссе",                     p: 9000 },
+  "dikey-tyul":      { ru:"Дикей тюль",                        p: 9500 },
+  "moskitnye-setki": { ru:"Москитные сетки Плиссе",            p:17500 }
 };
 
 var RED = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -52,75 +55,23 @@ document.addEventListener("click", function(e){
 }, true);
 
 /* ---------------- КАЗАХСКИЙ СЛОВАРЬ ----------------
-   Разметка русская. Ключа нет - строка остаётся русской. */
-var KZ = {
-"m.title":"Алматыда тапсырыспен жалюзи мен рулондық перделер - ASYL.ZHALUZI.KZ",
-"m.desc":"Алматы мен облыста тапсырыспен рулондық перделер, күн-түн, блэкаут, тік және көлденең жалюзи, плиссе. Тегін өлшеу және монтаж, бағасы 6 000 ₸/м²-ден, маталардың кең таңдауы. Күн сайын 9:00-22:00, нарықта 7 жыл.",
-"m.ogt":"Алматыда тапсырыспен жалюзи мен рулондық перделер - ASYL.ZHALUZI.KZ",
-"m.ogd":"Тегін өлшеу және монтаж, бағасы 6 000 ₸/м²-ден, маталар мен модельдердің кең таңдауы. Күн сайын 9:00-22:00, Алматы және облыс.",
-"a.home":"ASYL.ZHALUZI.KZ, басты бетке","a.nav":"Сайт бөлімдері","a.lang":"Сайт тілі","a.call":"Қоңырау шалу","a.menu":"Мәзір","a.prev":"Артқа","a.next":"Алға","a.lane":"Жұмыстар фотосы",
-"a.ig":"ASYL.ZHALUZI.KZ Instagram парақшасы: @asyl.zhaluzi.kz","a.ig2":"ASYL.ZHALUZI.KZ Instagram парақшасы",
-"nav.md":"Модельдер мен бағалар","nav.ru":"Рулондық","nav.dn":"Күн-түн","nav.vt":"Тік жалюзи","nav.rb":"Жұмыстар","nav.kl":"Калькулятор","nav.vp":"Сұрақтар","nav.kn":"Байланыс",
-"b.zamer":"Тегін өлшеу","b.models":"Модельдер мен бағалар","b.price":"Бағасын білу",
-"ig.menu":"Жұмыстар: Instagram","ig.hero":"Жұмыстар: Instagram","ig.gal":"Көбірек жұмыс: Instagram","ig.con":"Жұмыстар: Instagram",
-
-"h.kick":"Алматы және облыс · тапсырыспен жалюзи мен ролл-перделер · 7 жыл",
-"h.h1a":"Жалюзи мен рулондық перделер","h.h1b":"Алматыда тапсырыспен",
-"h.lead":"Өлшеу мен монтаж - <b>тегін</b>. Бағасы <b data-price-min>6 000 ₸/м²-ден</b>, маталар мен модельдердің кең таңдауы. Күн сайын 9:00-22:00.",
-"h.hint":"Айналдырыңыз - перде көтеріледі",
-
-"md.k":"Каталог","md.h":"Модельдер мен <em>«бастап»</em> бағалар","md.l":"Бағасы м² үшін, матасы мен механизмімен. Өлшеу мен монтаж - тегін, нақты бағасы - өлшеуден кейін.",
-"md.n":"«Бастап» бағалар шамамен, матасы мен терезе өлшеміне байланысты. Нақты құнын тегін өлшеуде айтамыз.",
-"c1.h":"Рулондық перделер","c1.p":"Классика: жақтауға мини немесе қорапқа","c1.a":"Ашық қонақ бөлме терезесіндегі ақ рулондық перде",
-"c2.h":"Күн-түн (зебра)","c2.p":"Жолақтар жарықты бір қимылмен реттейді","c2.a":"Ас үй терезесіндегі күн-түн перде",
-"c3.h":"Блэкаут","c3.p":"Жатын бөлме мен балалар бөлмесіне толық қараңғылау","c3.a":"Заманауи терезедегі сұр блэкаут рулондық перде",
-"c4.h":"Кассеталық UNI","c4.p":"Қорап пен бағыттауыштар, мата әйнекке тығыз","c4.a":"Терезе ойығындағы кассеталық рулондық перде",
-"c5.h":"Тік жалюзи","c5.p":"Үлкен терезелер мен кеңселерге мата ламельдері","c5.a":"Тік мата жалюзи, ламельдер ірі планда",
-"c6.h":"Көлденең жалюзи","c6.p":"Алюминий 25 мм: ас үй, балкон, кеңсе","c6.a":"Терезеден көрінісі бар ақ көлденең алюминий жалюзи",
-"c7.h":"Плиссе","c7.p":"Стандартты емес және мансарда терезелеріне қатпарлы","c7.a":"Бежевый плиссе перде ірі планда",
-"c8.h":"Фотобасып шығару","c8.p":"Сіздің суретіңіз немесе каталогтағы принт","c8.a":"Кофе принтті рулондық перделер, ASYL.ZHALUZI.KZ жұмысы",
-
-"p1.k":"Рулондық перделер","p1.h":"Кез келген терезеге <em>рулондық перделер</em>","p1.p":"Жақтауға мини немесе қорапқа. Маталар - жеңіл жарық сүзгісінен блэкаутқа дейін.","p1.a":"Терезедегі бежевый рулондық перде және көк кресло",
-"p2.k":"Күн-түн","p2.h":"Күн-түн: жарық <em>бір қимылмен</em>","p2.p":"Екі жолақты мата жылжиды - жұмсақ жарықтан толық көлеңкеге дейін. Ас үй мен қонақ бөлмеге сұранысты.","p2.a":"Терезесінде күн-түн перде бар ақ жатын бөлме",
-"p3.k":"Тік жалюзи","p3.h":"Үлкен терезелерге <em>тік жалюзи</em>","p3.p":"89 және 127 мм мата ламельдері: бұрылады және шетке жиналады. Кеңселер, панорамалық терезелер, эркерлер.","p3.a":"Күн сәулесіндегі жылы түсті тік мата жалюзи",
-
-"dk.k":"Кімге","dk.h":"Пәтерлер, үйлер, <em>кеңселер, коммерция</em>","dk.l":"Модель мен матаны бөлмеге қарай таңдаймыз - балалар бөлмесінен келіссөз бөлмесіне дейін.",
-"w1.h":"Пәтерлер","w1.p":"Жатын бөлме, ас үй, балалар бөлмесі","w1.a":"Терезесінде ашық түсті перде бар пәтердің қонақ бөлмесі",
-"w2.h":"Үйлер","w2.p":"Панорамалық және мансарда терезелері","w2.a":"Биік терезелері бар жеке үйдің қонақ бөлмесі",
-"w3.h":"Кеңселер","w3.p":"Бүкіл қабатқа бір стиль","w3.a":"Терезелерінде рулондық перделер бар жарық кеңсе",
-"w4.h":"Коммерция","w4.p":"Кафе, салондар, дүкендер, клиникалар","w4.a":"Үлкен терезелерінде рулондық перделер бар кафе залы",
-
-"pc.k":"Неге біз","pc.h":"Сіздің жарығыңыз - <em>сіздің ережеңіз</em>","pc.l":"7 жыл бойы Алматы мен облыста жалюзи мен ролл-перделер орнатамыз. Келеміз, өлшейміз, өлшемге сай тігеміз және орнатамыз - өлшеу мен орнатуға қосымша ақысыз.","pc.a":"Қабырғадағы жалюзиден түскен жылы жарық жолақтары",
-"f1":"жыл нарықта","f2":"өлшеу мен монтаж","f3":"каталогтағы модель","f4":"күн сайын, демалыссыз","f5b":"Алматы","f5":"және Алматы облысы",
-
-"rb.k":"Біздің жұмыстар","rb.h":"Біз безендірген <em>терезелер</em>","rb.l":"Алматы мен облыстағы нысандардан фото - өңдеусіз, сол күйінде.",
-"g1":"Рулондық · қонақ бөлме","g2":"Рулондық · жақтау ашық","g3":"Тік · арка","g4":"Рулондық · эркер ас үй","g5":"Күн-түн · ас үй","g6":"Принтті рулондық","g7":"Принт · ірі план","g8":"Принт · жақтау ашық","g9":"Күн-түн · жабық","g10":"Күн-түн · жарық",
-
-"kk.k":"Қалай жұмыс істейміз","kk.h":"Өтінімнен монтажға дейін - <em>төрт қадам</em>",
-"s1.h":"Өтінім","s1.p":"WhatsApp, қоңырау немесе сайттағы форма.",
-"s2.h":"Тегін өлшеу","s2.p":"Келеміз, өлшейміз, мата үлгілерін көрсетеміз.",
-"s3.h":"Дайындау","s3.p":"Сіздің өлшеміңіз бен таңдаған матаңызға сай тігеміз.",
-"s4.h":"Монтаж","s4.p":"Тегін орнатамыз және қалай қолдануды көрсетеміз.",
-
-"kl.k":"Калькулятор","kl.h":"Құнын бір минутта <em>шамалаңыз</em>","kl.l":"«Бастап» баға бойынша бағдар. Нақты сомасын тегін өлшеуден кейін айтамыз.",
-"kl.model":"Модель","kl.w":"Терезе ені, см","kl.hh":"Терезе биіктігі, см","kl.n":"Терезе саны","kl.res":"Шамамен","kl.send":"Есепті WhatsApp-қа жіберу",
-
-"vp.k":"Сұрақтар","vp.h":"Жиі қойылатын <em>сұрақтар</em>",
-"q1.q":"Өлшеу қанша тұрады?","q1.a":"Ештеңе. Алматы мен Алматы облысында өлшеу мен монтаж тегін.",
-"q2.q":"Матаны қалай таңдаймын?","q2.a":"Өлшеу кезінде: мата мен түс үлгілерін терезеңіздің жанында көрсетеміз - жарық сүзгісінен блэкаутқа дейін.",
-"q3.q":"Бұрғылаусыз орнатуға бола ма?","q3.a":"Мини-рулондық перделерге жақтауға бұрғылаусыз бекіту бар. Сіздің терезеңізге қайсысы сай келетінін өлшеуде айтамыз.",
-"q4.q":"м² бағасына не кіреді?","q4.a":"Мата, механизм, өлшеу мен монтаж. Қорытынды сомасы мата мен өлшемге байланысты - өлшеуден кейін есептейміз.",
-"q5.q":"Қала сыртына шығасыздар ма?","q5.a":"Иә, Алматы және Алматы облысы бойынша жұмыс істейміз.",
-
-"kn.k":"Тегін өлшеу","kn.h":"Өтінім қалдырыңыз - <em>өлшеуге келеміз</em>","kn.l":"Жұмыс уақытында WhatsApp-та жауап береміз: күн сайын 9:00-22:00.","kn.a":"Терезе алдындағы ашық түсті рулондық перде мен өсімдік",
-"z.name":"Аты","z.nameph":"Сізге қалай жүгінуге болады","z.phone":"Телефон","z.what":"Не керек","z.whatph":"3 терезеге рулондық, Алмалы ауданы",
-"z.agree":"Өтінім бойынша байланысу үшін дербес деректерімді өңдеуге келісемін.","z.send":"WhatsApp-қа жіберу",
-"z.ok":"Рақмет! Дайын хабарламасы бар WhatsApp ашылады - жұмыс уақытында жауап береміз.","z.err":"Атыңызды, телефоныңызды көрсетіп, келісімді растаңыз.",
-"z.note":"Түймені басқан соң дайын хабарламасы бар WhatsApp ашылады - ол сіздің нөміріңізден кетеді.",
-"c.ph":"Телефон · WhatsApp","c.hr":"Кесте","c.hrv":"9:00-22:00, күн сайын","c.geo":"География","c.geov":"Алматы және Алматы облысы - өлшеуге шығамыз",
-"ft.slog":"Сіздің жарығыңыз - сіздің ережеңіз","ft.copy":"© 2026 ASYL.ZHALUZI.KZ · Алматыдағы жалюзи мен рулондық перделер · күн сайын 9:00-22:00",
-"bar.call":"Қоңырау"
-};
+   Разметка русская. Казахский текст живёт только в assets/lang/kk.js и грузится
+   по кнопке KZ, по ?lang=kk или по сохранённому выбору: проверка Google Ads видит
+   русский сайт. Ключа нет - строка остаётся русской. */
+var KZ = null;          /* заполняется из assets/lang/kk.js */
+var KK_SRC = (function(){
+  var cs = document.currentScript, m = cs && cs.src.match(/[?&]v=([^&]+)/);
+  return "assets/lang/kk.js" + (m ? "?v=" + m[1] : "");
+})();
+function loadKK(done){
+  if (window.SITE_KK) { KZ = window.SITE_KK.dict; return done(true); }
+  var sc = document.createElement("script");
+  sc.src = KK_SRC;
+  sc.onload = function(){ KZ = window.SITE_KK ? window.SITE_KK.dict : null; done(!!KZ); };
+  sc.onerror = function(){ done(false); };
+  document.head.appendChild(sc);
+}
+function KKS(){ return window.SITE_KK || {}; }
 
 /* готовые тексты WhatsApp: название модели - отдельной строкой */
 var WA_TXT = {
@@ -130,17 +81,10 @@ ru:{
   card:"Здравствуйте! Хочу узнать цену:\n{t}\nРазмеры окна и адрес: ",
   who:"Здравствуйте! Нужны жалюзи / рулонные шторы.\nОбъект: {t}\nАдрес и число окон: ",
   kontakty:"Здравствуйте! Пишу с сайта ASYL.ZHALUZI.KZ. Вопрос: "
-},
-kk:{
-  hero:"Сәлеметсіз бе! ASYL.ZHALUZI.KZ сайтынан жазып отырмын. Жалюзи / рулондық перделер қызықтырады:\n",
-  zamer:"Сәлеметсіз бе! Тегін өлшеуге жазылғым келеді. Мекенжай мен ыңғайлы уақыт: ",
-  card:"Сәлеметсіз бе! Бағасын білгім келеді:\n{t}\nТерезе өлшемі мен мекенжай: ",
-  who:"Сәлеметсіз бе! Жалюзи / рулондық перделер керек.\nНысан: {t}\nМекенжай мен терезе саны: ",
-  kontakty:"Сәлеметсіз бе! ASYL.ZHALUZI.KZ сайтынан жазып отырмын. Сұрақ: "
-}};
+}
+};
 
-var TICK = ["Рулонные шторы","День-ночь","Блэкаут","Кассетные UNI","Вертикальные жалюзи","Горизонтальные жалюзи","Плиссе","Фотопечать","Бесплатный замер и монтаж"];
-var TICK_KZ = ["Рулондық перделер","Күн-түн","Блэкаут","Кассеталық UNI","Тік жалюзи","Көлденең жалюзи","Плиссе","Фотобасып шығару","Тегін өлшеу және монтаж"];
+var TICK = ["Роллшторы Mini","Классические роллшторы","День-Ночь","Блэкаут","Кассетные роллшторы","Вертикальные жалюзи","Горизонтальные жалюзи","Плиссе","Дикей тюль","Москитные сетки плиссе","Бесплатный замер и монтаж"];
 
 /* ---------------- КОНТАКТЫ ИЗ КОНСТАНТЫ ---------------- */
 document.querySelectorAll("[data-tel]").forEach(function(a){ a.href = "tel:" + CONTACT.phone; });
@@ -156,12 +100,12 @@ function snapshot(){
   document.querySelectorAll("[data-i-ph]").forEach(function(el){ RU[el.dataset.iPh] = el.getAttribute("placeholder"); });
   var t = document.querySelector("title[data-i-t]"); if (t) RU[t.dataset.iT] = t.textContent;
 }
-function pick(k, kk){ return (kk && KZ[k] !== undefined) ? KZ[k] : RU[k]; }
+function pick(k, kk){ return (kk && KZ && KZ[k] !== undefined) ? KZ[k] : RU[k]; }
 function curLang(){ return root.lang === "kk" ? "kk" : "ru"; }
 function T(k){ return pick(k, curLang() === "kk") || ""; }
 function plain(html){ var d = document.createElement("div"); d.innerHTML = html; return d.textContent; }
 function fmt(n){ return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, " "); }
-function priceText(p, kk){ return kk ? (fmt(p) + " ₸/м²-ден") : ("от " + fmt(p) + " ₸/м²"); }
+function priceText(p, kk){ return kk ? (fmt(p) + KKS().from) : ("от " + fmt(p) + " ₸/м²"); }
 
 /* цены «от» из одного объекта - в карточки, плиты и лид героя */
 function fillPrices(){
@@ -170,14 +114,15 @@ function fillPrices(){
   document.querySelectorAll("[data-price]").forEach(function(el){
     var m = PRICES[el.dataset.price]; if (m) el.textContent = priceText(m.p, kk);
   });
-  document.querySelectorAll("[data-price-min]").forEach(function(el){ el.textContent = kk ? (fmt(min) + " ₸/м²-ден") : (fmt(min) + " ₸/м²"); });
+  document.querySelectorAll("[data-price-min]").forEach(function(el){ el.textContent = kk ? (fmt(min) + KKS().from) : (fmt(min) + " ₸/м²"); });
 }
 
 /* текст заявки собирается из названия модели на текущем языке */
 function setWaLinks(){
   var L = curLang();
   document.querySelectorAll("[data-wa]").forEach(function(a){
-    var key = a.dataset.wa, t = WA_TXT[L][key] || WA_TXT[L].hero;
+    var W = L === "kk" ? KKS().wa : WA_TXT.ru;
+    var key = a.dataset.wa, t = W[key] || W.hero;
     if (t.indexOf("{t}") > -1) t = t.replace("{t}", a.dataset.waTitle ? plain(T(a.dataset.waTitle)).trim() : "");
     a.href = "https://wa.me/" + CONTACT.wa + "?text=" + encodeURIComponent(t);
     a.target = "_blank"; a.rel = "noopener";
@@ -185,6 +130,8 @@ function setWaLinks(){
 }
 
 function applyLang(lang){
+  /* казахский словарь - отдельным файлом, только по явному выбору человека */
+  if (lang === "kk" && !KZ) { loadKK(function(ok){ applyLang(ok ? "kk" : "ru"); }); return; }
   var kk = lang === "kk";
   root.setAttribute("lang", kk ? "kk" : "ru");
   document.querySelectorAll("[data-i]").forEach(function(el){
@@ -250,7 +197,7 @@ function fitText(){
    Копий столько, чтобы дорожка была шире двух экранов; шаг цикла - одна копия. */
 function fillTicker(){
   var el = document.getElementById("ticker"); if (!el) return;
-  var list = curLang() === "kk" ? TICK_KZ : TICK;
+  var list = curLang() === "kk" ? KKS().tick : TICK;
   var one = list.map(function(t){ return "<b>" + t + "</b>"; }).join("");
   el.innerHTML = one;
   var w = el.scrollWidth || 1000;
@@ -458,13 +405,14 @@ document.querySelectorAll(".lane-w").forEach(function(w){
 var calc = document.getElementById("calc"), calcModel = document.getElementById("calc-model");
 var calcSum = document.getElementById("calc-sum"), calcSub = document.getElementById("calc-sub");
 var calcState = null;
+function mName(k, kk){ return (kk && KKS().names && KKS().names[k]) || PRICES[k].ru; }
 function calcOptions(){
   if (!calcModel) return;
   var kk = curLang() === "kk", cur = calcModel.value;
   calcModel.innerHTML = "";
   Object.keys(PRICES).forEach(function(k){
     var o = document.createElement("option");
-    o.value = k; o.textContent = PRICES[k][kk ? "kk" : "ru"] + " · " + priceText(PRICES[k].p, kk);
+    o.value = k; o.textContent = mName(k, kk) + " · " + priceText(PRICES[k].p, kk);
     calcModel.appendChild(o);
   });
   if (cur && PRICES[cur]) calcModel.value = cur;
@@ -472,16 +420,16 @@ function calcOptions(){
 function calcRun(){
   if (!calc) return;
   var kk = curLang() === "kk";
-  var m = PRICES[calcModel.value] || PRICES.rulonnye;
+  var mk = PRICES[calcModel.value] ? calcModel.value : "klassicheskie", m = PRICES[mk];
   var w = Math.min(400, Math.max(30, parseFloat(calc.w.value) || 0));
   var h = Math.min(400, Math.max(30, parseFloat(calc.h.value) || 0));
   var n = Math.min(50, Math.max(1, parseInt(calc.n.value, 10) || 1));
   var area = Math.max(.5, w * h / 10000) * n;                 /* минимум 0,5 м² на окно */
   var sum = Math.ceil(area * m.p / 100) * 100;
-  calcState = {m: m, w: w, h: h, n: n, area: area, sum: sum};
-  calcSum.textContent = kk ? (fmt(sum) + " ₸-ден") : ("от " + fmt(sum) + " ₸");
-  var okn = kk ? " терезе" : (n === 1 ? " окно" : (n < 5 ? " окна" : " окон"));
-  calcSub.textContent = (kk ? m.kk : m.ru) + " · " + n + okn + " · " + area.toFixed(1).replace(".", ",") + " м²";
+  calcState = {m: m, name: mName(mk, kk), w: w, h: h, n: n, area: area, sum: sum};
+  calcSum.textContent = kk ? (fmt(sum) + KKS().sumFrom) : ("от " + fmt(sum) + " ₸");
+  var okn = kk ? KKS().win : (n === 1 ? " окно" : (n < 5 ? " окна" : " окон"));
+  calcSub.textContent = calcState.name + " · " + n + okn + " · " + area.toFixed(1).replace(".", ",") + " м²";
 }
 if (calc) {
   calc.addEventListener("input", calcRun);
@@ -491,8 +439,8 @@ if (calc) {
     calcRun();
     var s = calcState, kk = curLang() === "kk";
     var t = kk
-      ? "Сәлеметсіз бе! Сайттағы калькулятордан есеп:\n" + s.m.kk + "\nТерезе: " + s.n + " дана, " + s.w + "×" + s.h + " см (" + s.area.toFixed(1) + " м²)\nШамамен: " + fmt(s.sum) + " ₸-ден\nТегін өлшеуге жазылғым келеді."
-      : "Здравствуйте! Расчёт из калькулятора на сайте:\n" + s.m.ru + "\nОкна: " + s.n + " шт, " + s.w + "×" + s.h + " см (" + s.area.toFixed(1) + " м²)\nОриентировочно: от " + fmt(s.sum) + " ₸\nХочу записаться на бесплатный замер.";
+      ? KKS().calcMsg(s, fmt)
+      : "Здравствуйте! Расчёт из калькулятора на сайте:\n" + s.name + "\nОкна: " + s.n + " шт, " + s.w + "×" + s.h + " см (" + s.area.toFixed(1) + " м²)\nОриентировочно: от " + fmt(s.sum) + " ₸\nХочу записаться на бесплатный замер.";
     conv("lead");
     window.open("https://wa.me/" + CONTACT.wa + "?text=" + encodeURIComponent(t), "_blank", "noopener");
   });
@@ -509,7 +457,7 @@ if (form) form.addEventListener("submit", function(e){
   err.hidden = true;
   var L = curLang();
   var t = (L === "kk"
-    ? "Сәлеметсіз бе! ASYL.ZHALUZI.KZ сайтынан тегін өлшеуге өтінім.\nАты: " + name + "\nТелефон: " + phone + (msg ? "\nНе керек: " + msg : "")
+    ? KKS().formMsg(name, phone, msg)
     : "Здравствуйте! Заявка на бесплатный замер с сайта ASYL.ZHALUZI.KZ.\nИмя: " + name + "\nТелефон: " + phone + (msg ? "\nЧто нужно: " + msg : ""));
   ok.hidden = false;
   conv("lead");
