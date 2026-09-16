@@ -44,7 +44,7 @@ var root = document.documentElement;
 function conv(key){
   var id = (window.AZ_CONV || {})[key];
   if (!id || typeof window.gtag !== "function") return;
-  window.gtag("event", "conversion", {send_to: id, value: 1.0, currency: "USD"});
+  window.gtag("event", "conversion", {send_to: id, value: 1.0, currency: "USD", transport_type: "beacon"});
 }
 document.addEventListener("click", function(e){
   var a = e.target.closest ? e.target.closest("a[href]") : null;
