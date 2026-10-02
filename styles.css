@@ -238,7 +238,14 @@ html.no-plate .rv{opacity:1;transform:none;transition:none}
 .ph-net::before{content:"";position:absolute;left:22%;right:22%;top:12%;bottom:0;border:10px solid #FFFDF9;border-bottom:0;border-radius:4px 4px 0 0;box-shadow:0 20px 40px -24px rgba(43,42,41,.45);background:linear-gradient(90deg,transparent 0 46%,rgba(255,253,249,.4) 46%),linear-gradient(180deg,#dfe6e4,#f3efe6)}
 .ph-net::after{content:"";position:absolute;left:calc(22% + 10px);width:24%;top:calc(12% + 10px);bottom:0;background:repeating-linear-gradient(90deg,rgba(69,66,64,.55) 0 1px,rgba(69,66,64,.08) 1px 5px,rgba(255,253,249,.5) 5px 6px,rgba(69,66,64,.12) 6px 10px),repeating-linear-gradient(0deg,rgba(69,66,64,.12) 0 1px,transparent 1px 3px);border-right:4px solid var(--gold)}
 .ph-cap{position:absolute;left:0;right:0;top:4.5%;z-index:2;text-align:center;font:600 10px/1 var(--ft);letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
-.ph-net.has-img::before,.ph-net.has-img::after,.ph-net.has-img .ph-cap{display:none}
+.ph-net.has-img::before,.ph-net.has-img::after,.ph-net.has-img .ph-cap,.ph-duet.has-img::before,.ph-duet.has-img::after,.ph-duet.has-img .ph-cap{display:none}
+/* заглушка «внутренняя сетка»: окно, сетка на всю раму с ушками-держателями */
+.ph-net.ph-in::before{left:26%;right:26%;top:16%;bottom:12%;border:10px solid #FFFDF9;border-radius:4px;background:linear-gradient(180deg,#dfe6e4,#f3efe6)}
+.ph-net.ph-in::after{left:calc(26% + 16px);right:calc(26% + 16px);width:auto;top:calc(16% + 16px);bottom:calc(12% + 16px);border:3px solid #FFFDF9;border-right-width:3px;outline:1px solid rgba(69,66,64,.25);background:repeating-linear-gradient(90deg,rgba(69,66,64,.32) 0 1px,transparent 1px 4px),repeating-linear-gradient(0deg,rgba(69,66,64,.32) 0 1px,transparent 1px 4px);box-shadow:inset 0 0 0 1px rgba(69,66,64,.2),-6px 0 0 -2px var(--gold),6px 0 0 -2px var(--gold)}
+/* заглушка «Дуэт»: окно, сзади лёгкая ткань до низа, спереди плотная наполовину */
+.ph-duet{background:linear-gradient(180deg,#EFE7DA,#E6DCCB)}
+.ph-duet::before{content:"";position:absolute;left:24%;right:24%;top:16%;bottom:10%;border:10px solid #FFFDF9;border-radius:4px;box-shadow:0 20px 40px -24px rgba(43,42,41,.45);background:linear-gradient(90deg,transparent 49.5%,#FFFDF9 49.5% 50.5%,transparent 50.5%),linear-gradient(180deg,rgba(255,253,249,.55),rgba(255,253,249,.35)),linear-gradient(180deg,#dfe6e4,#f3efe6)}
+.ph-duet::after{content:"";position:absolute;left:calc(24% - 6px);right:calc(24% - 6px);top:calc(16% - 8px);height:calc(42% + 8px);border-top:10px solid #FFFDF9;border-bottom:5px solid var(--gold);border-radius:3px;background:linear-gradient(180deg,#A78A6A,#8F7458);box-shadow:0 14px 24px -14px rgba(43,42,41,.55)}
 .card{position:relative;border-radius:18px;overflow:hidden;background:var(--paper2);box-shadow:0 1px 0 var(--line),0 24px 50px -36px rgba(43,42,41,.5);display:flex;flex-direction:column;transition:transform .35s,box-shadow .35s}
 .card:hover{transform:translateY(-4px);box-shadow:0 1px 0 var(--line),0 30px 50px -30px rgba(43,42,41,.55)}
 .card .im{position:relative;display:block;aspect-ratio:4/3;overflow:hidden;background:var(--sand)}
